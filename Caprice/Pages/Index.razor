@@ -1,0 +1,29 @@
+﻿@page "/"
+
+@inject INoteService _noteService;
+
+<div class="card-columns">
+    @foreach (var note in _notes)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@note.Title</h5>
+                <p class="card-text">@note.Content</p>
+                @if (!string.IsNullOrWhiteSpace(note.Code))
+                {
+                    <pre><code>@note.Code</code></pre>
+                }
+                <p class="card-text"><small class="text-muted">@note.CreateTime</small></p>
+            </div>
+        </div>
+    }
+</div>
+
+@code{
+    private IEnumerable<Note> _notes;
+
+    protected override void OnInitialized()
+    {
+        _notes = _noteService.GetNotes().ToList().OrderByDescending(x => x.Id);
+    }
+}
