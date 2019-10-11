@@ -49,13 +49,6 @@ namespace Caprice
                 app.UseHsts();
             }
 
-            app.Use(async (context, next) =>
-            {
-                context.Response.Headers["Content-Security-Policy"] = "frame-ancestors 'self' https:;";
-
-                await next();
-            });
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
