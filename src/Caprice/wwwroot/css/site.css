@@ -2,6 +2,7 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    min-height: 100vh;
 }
 
 a, .btn-link {
@@ -18,12 +19,20 @@ app {
     position: relative;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
 
 .top-row {
     height: 3.5rem;
     display: flex;
     align-items: center;
+}
+
+.right {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .main {
@@ -34,6 +43,7 @@ app {
     background-color: #f7f7f7;
     border-bottom: 1px solid #d6d5d5;
     justify-content: flex-end;
+    z-index: 100;
 }
 
 .main .top-row > a {
@@ -109,6 +119,14 @@ app {
 
 .validation-message {
     color: red;
+}
+
+.bottom {
+    height: 50px;
+    line-height:50px;
+    background: #eee;
+    font-family: "Times New Roman";
+    color: #666;
 }
 
 @media (max-width: 767.98px) {
