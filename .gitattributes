@@ -62,3 +62,4 @@
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
 *.razor	linguist-language=C#
+*.cshtml linguist-language=C#
