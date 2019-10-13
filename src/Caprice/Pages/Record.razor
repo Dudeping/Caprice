@@ -3,7 +3,7 @@
 @inject INoteService _noteService;
 @inject NavigationManager _navigationManager;
 
-<EditForm Model="_note" OnValidSubmit="Submit">
+<EditForm Model="_note" OnValidSubmit="async e => await this.Submit()">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -27,11 +27,11 @@
 @code {
     private Note _note = new Note();
 
-    private void Submit()
+    private async Task Submit()
     {
         _note.CreateTime = DateTime.Now;
 
-        _noteService.CreateAsync(_note);
+        await _noteService.CreateAsync(_note);
 
         _navigationManager.NavigateTo("/");
     }

@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @inject INoteService _noteService;
+@inject NavigationManager _navigationManager;
 
 <div class="card-columns">
     @foreach (var note in _notes)
@@ -13,7 +14,10 @@
                 {
                     <pre><code>@note.Code</code></pre>
                 }
-                <p class="card-text"><small class="text-muted">@note.CreateTime</small></p>
+                <p class="card-text">
+                    <small class="text-muted">@note.CreateTime</small>
+                    <a href="#" @onclick="async e => await this.DeleteNote(note.Id)" class="oi oi-trash"></a>
+                </p>
             </div>
         </div>
     }
@@ -25,5 +29,12 @@
     protected override void OnInitialized()
     {
         _notes = _noteService.GetNotes().ToList().OrderByDescending(x => x.Id);
+    }
+
+    public async Task DeleteNote(int id)
+    {
+        await _noteService.DeleteAsync(id);
+
+        _navigationManager.NavigateTo("/");
     }
 }
