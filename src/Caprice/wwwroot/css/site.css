@@ -123,15 +123,24 @@ app {
 
 .bottom {
     height: 50px;
-    line-height:50px;
+    line-height: 50px;
     background: #eee;
     font-family: "Times New Roman";
     color: #666;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 14px;
+    text-align: center;
 }
 
 @media (max-width: 767.98px) {
     .main .top-row {
         display: none;
+    }
+    .content .card-columns .card {
+        border: none;
+        border-bottom: 1px solid rgba(0,0,0,.125);
     }
 }
 
@@ -164,5 +173,11 @@ app {
     .sidebar .collapse {
         /* Never collapse the sidebar for wide screens */
         display: block;
+    }
+
+    .content{
+       padding-left: 24px;
+       padding-right: 24px;
+       box-sizing: border-box;
     }
 }
