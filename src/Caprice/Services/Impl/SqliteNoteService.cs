@@ -7,7 +7,7 @@ using Caprice.Models;
 
 namespace Caprice.Services
 {
-    public class SqliteNoteService : INoteService
+    internal class SqliteNoteService : INoteService
     {
         private readonly SqliteDbContext _context;
 

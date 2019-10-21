@@ -1,6 +1,7 @@
 ﻿@page "/record"
 
 @inject INoteService _noteService;
+@inject ITextToHtmlService _toHtmlService;
 @inject NavigationManager _navigationManager;
 
 <EditForm Model="_note" OnValidSubmit="async e => await this.Submit()">
@@ -30,6 +31,10 @@
     private async Task Submit()
     {
         _note.CreateTime = DateTime.Now;
+
+        _note.EditTime = _note.CreateTime;
+
+        _note.HtmlText = _toHtmlService.Transform(_note.Content);
 
         await _noteService.CreateAsync(_note);
 

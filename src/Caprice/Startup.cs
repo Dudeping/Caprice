@@ -33,6 +33,7 @@ namespace Caprice
 
             services.AddDbContext<SqliteDbContext>(options => options.UseSqlite("Data Source=caprice.db"));
             services.AddScoped<INoteService, SqliteNoteService>();
+            services.AddScoped<ITextToHtmlService, TextToHtmlService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

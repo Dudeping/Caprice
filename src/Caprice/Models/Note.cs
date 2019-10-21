@@ -25,6 +25,8 @@ namespace Caprice.Models
         [StringLength(9999, ErrorMessage = "{0} 长度必须在 {2} - {1} 之间.", MinimumLength = 2)]
         public string Code { get; set; }
 
+        public string HtmlText { get; set; }
         public DateTime CreateTime { get; set; }
+        public DateTime EditTime { get; set; }
     }
 }

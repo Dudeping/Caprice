@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @inject INoteService _noteService;
+@inject ITextToHtmlService _toHtmlService;
 
 <div class="card-columns">
     @foreach (var note in _notes)
@@ -8,7 +9,7 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">@note.Title</h5>
-                <p class="card-text">@note.Content</p>
+                <p class="card-text">@note.HtmlText</p>
                 @if (!string.IsNullOrWhiteSpace(note.Code))
                 {
                     <pre><code>@note.Code</code></pre>
@@ -25,9 +26,21 @@
 @code{
     private IEnumerable<Note> _notes;
 
-    protected override void OnInitialized()
+    protected async override void OnInitialized()
     {
-        _notes = _noteService.GetNotes().ToList().OrderByDescending(x => x.Id);
+        var notes = _noteService.GetNotes().ToList();
+
+        foreach (var note in notes)
+        {
+            if (string.IsNullOrWhiteSpace(note.HtmlText))
+            {
+                note.HtmlText = _toHtmlService.Transform(note.Content);
+
+                await _noteService.UpdateAsync(note);
+            }
+        }
+
+        _notes = notes.OrderByDescending(x => x.Id);
     }
 
     public async void DeleteNote(int id)
