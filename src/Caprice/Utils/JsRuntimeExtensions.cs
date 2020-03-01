@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.JSInterop;
 
 namespace Caprice.Utils
@@ -10,7 +7,7 @@ namespace Caprice.Utils
     {
         public static async Task<bool> CheckPassword(this IJSRuntime runtime)
         {
-            var password = await runtime.InvokeAsync<string>("prompt", "暗号:");
+            string password = await runtime.InvokeAsync<string>("prompt", "暗号:");
 
             if (password != "Caprice.2020")
             {

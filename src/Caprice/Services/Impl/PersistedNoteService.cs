@@ -1,8 +1,8 @@
-﻿using Caprice.Data;
-using Caprice.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Caprice.Data;
+using Caprice.Models;
 
 namespace Caprice.Services
 {
