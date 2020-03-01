@@ -1,29 +1,28 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">编程随想</a>
+﻿<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="/">编程随想</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> 汇总
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="record">
-                <span class="oi oi-plus" aria-hidden="true"></span> 新增
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="logs">
-                <span class="oi oi-clock" aria-hidden="true"></span> 记录
-            </NavLink>
-        </li>
-    </ul>
-</div>
+    <div class="@NavMenuCssClass navbar-collapse" @onclick="ToggleNavMenu">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    随笔汇总
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="record">
+                    新增随笔
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="logs">
+                    网站记录
+                </NavLink>
+            </li>
+        </ul>
+    </div>
+</nav>
 
 @code {
     bool collapseNavMenu = true;

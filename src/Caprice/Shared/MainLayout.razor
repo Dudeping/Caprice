@@ -1,18 +1,20 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="sidebar">
+<header>
+    <!-- Fixed navbar -->
     <NavMenu />
-</div>
+</header>
 
-<div class="right">
-    <div class="main">
-        <div class="top-row px-4">
-            <img src="/china.jfif" width="80" />
-        </div>
-
-        <div class="content">
-            @Body
-        </div>
+<!-- Begin page content -->
+<main role="main" class="flex-shrink-0">
+    <div class="container">
+        <br />
+        @Body
     </div>
-    <div class="bottom">© 2019 - @DateTime.Now.Year Codeping, Powered by Blazor on Docker.</div>
-</div>
+</main>
+
+<footer class="footer mt-auto py-3">
+    <div class="container">
+        <span class="text-muted">© 2019 - @DateTime.Now.Year Codeping, Powered by Blazor on Docker.</span>
+    </div>
+</footer>

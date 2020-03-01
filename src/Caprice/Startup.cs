@@ -1,17 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Caprice.Data;
+using Caprice.Services;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Caprice.Services;
-using Caprice.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace Caprice
 {
@@ -31,8 +25,9 @@ namespace Caprice
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            services.AddDbContext<SqliteDbContext>(options => options.UseSqlite("Data Source=caprice.db"));
-            services.AddScoped<INoteService, SqliteNoteService>();
+            services.AddDbContext<CapriceDbContext>(options =>
+                options.UseSqlServer(this.Configuration.GetConnectionString("CapriceDbContext")));
+            services.AddScoped<INoteService, PersistedNoteService>();
             services.AddScoped<ITextToHtmlService, TextToHtmlService>();
         }
 
