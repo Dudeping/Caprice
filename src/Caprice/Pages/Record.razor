@@ -3,6 +3,7 @@
 @inject INoteService _noteService;
 @inject ITextToHtmlService _toHtmlService;
 @inject NavigationManager _navigationManager;
+@inject IJSRuntime _jsRuntime;
 
 <EditForm Model="_note" OnValidSubmit="async e => await this.Submit()">
     <DataAnnotationsValidator />
@@ -30,14 +31,17 @@
 
     private async Task Submit()
     {
-        _note.CreateTime = DateTime.Now;
+        if (await _jsRuntime.CheckPassword())
+        {
+            _note.CreateTime = DateTime.Now;
 
-        _note.EditTime = _note.CreateTime;
+            _note.EditTime = _note.CreateTime;
 
-        _note.HtmlText = _toHtmlService.Transform(_note.Content);
+            _note.HtmlText = _toHtmlService.Transform(_note.Content);
 
-        await _noteService.CreateAsync(_note);
+            await _noteService.CreateAsync(_note);
 
-        _navigationManager.NavigateTo("/");
+            _navigationManager.NavigateTo("/");
+        }
     }
 }

@@ -1,7 +1,10 @@
 ﻿@page "/"
 
+@using Microsoft.AspNetCore.Mvc.ViewFeatures;
+
 @inject INoteService _noteService;
 @inject ITextToHtmlService _toHtmlService;
+@inject IJSRuntime _jsRuntime;
 
 <div class="card-columns">
     @foreach (var note in _notes)
@@ -9,14 +12,14 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">@note.Title</h5>
-                <p class="card-text">@note.HtmlText</p>
+                <p class="card-text">@((MarkupString)note.HtmlText)</p>
                 @if (!string.IsNullOrWhiteSpace(note.Code))
                 {
                     <pre><code>@note.Code</code></pre>
                 }
                 <p class="card-text">
                     <small class="text-muted">@note.CreateTime</small>
-                    <a href="#" @onclick="e => this.DeleteNote(note.Id)" class="oi oi-trash" style="float:right"></a>
+                    <a href="#" @onclick="async e => await this.DeleteNote(note.Id)" class="oi oi-trash" style="float:right"></a>
                 </p>
             </div>
         </div>
@@ -26,7 +29,7 @@
 @code{
     private IEnumerable<Note> _notes;
 
-    protected async override void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
         var notes = _noteService.GetNotes().ToList();
 
@@ -43,10 +46,13 @@
         _notes = notes.OrderByDescending(x => x.Id);
     }
 
-    public async void DeleteNote(int id)
+    public async Task DeleteNote(int id)
     {
-        await _noteService.DeleteAsync(id);
+        if (await _jsRuntime.CheckPassword())
+        {
+            await _noteService.DeleteAsync(id);
 
-        this.OnInitialized();
+            await this.OnInitializedAsync();
+        }
     }
 }
