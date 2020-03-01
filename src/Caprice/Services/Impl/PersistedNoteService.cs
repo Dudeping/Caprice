@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Caprice.Data;
+﻿using Caprice.Data;
 using Caprice.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Caprice.Services
 {
-    internal class SqliteNoteService : INoteService
+    internal class PersistedNoteService : INoteService
     {
-        private readonly SqliteDbContext _context;
+        private readonly CapriceDbContext _context;
 
-        public SqliteNoteService(SqliteDbContext context)
+        public PersistedNoteService(CapriceDbContext context)
         {
             _context = context;
         }
