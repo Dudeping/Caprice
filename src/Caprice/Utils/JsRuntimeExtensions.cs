@@ -9,14 +9,24 @@ namespace Caprice.Utils
         {
             string password = await runtime.InvokeAsync<string>("prompt", "暗号:");
 
+            if (password == null)
+            {
+                return false;
+            }
+
             if (password != "Caprice.2020")
             {
-                await runtime.InvokeVoidAsync("alert", "路过...");
+                await runtime.AlertAsync("路过...");
 
                 return false;
             }
 
             return true;
+        }
+
+        public static async Task AlertAsync(this IJSRuntime runtime, string message)
+        {
+            await runtime.InvokeVoidAsync("alert", message);
         }
     }
 }
