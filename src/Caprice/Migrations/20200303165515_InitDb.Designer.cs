@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Caprice.Migrations
 {
     [DbContext(typeof(CapriceDbContext))]
-    [Migration("20200302004238_InitDb")]
+    [Migration("20200303165515_InitDb")]
     partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
