@@ -17,9 +17,14 @@
                 {
                     <pre><code>@note.Code</code></pre>
                 }
+
                 <p class="card-text">
                     <small class="text-muted">@note.CreateTime</small>
-                    <a href="#" @onclick="async e => await this.DeleteNote(note.Id)" class="oi oi-trash" style="float:right"></a>
+                    <div style="float:right">
+                        <a href="/edit/@note.Id" class="oi oi-pencil"></a>
+                        &nbsp;
+                        <a href="#" @onclick="async e => await this.DeleteNote(note.Id)" class="oi oi-trash"></a>
+                    </div>
                 </p>
             </div>
         </div>
@@ -43,7 +48,7 @@
             }
         }
 
-        _notes = notes.OrderByDescending(x => x.Id);
+        _notes = notes.OrderByDescending(x => x.EditTime);
     }
 
     public async Task DeleteNote(int id)

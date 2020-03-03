@@ -1,0 +1,67 @@
+﻿@page "/edit/{id:int}"
+
+@inject INoteService _noteService;
+@inject ITextToHtmlService _toHtmlService;
+@inject NavigationManager _navigationManager;
+@inject IJSRuntime _jsRuntime;
+
+@if (_note != null)
+{
+    <EditForm Model="_note" OnValidSubmit="async e => await this.Submit()">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <InputText @bind-Value="_note.Title" class="form-control" placeholder="标题" />
+        </div>
+
+        <div class="form-group">
+            <InputTextArea @bind-Value="_note.Content" rows="10" class="form-control" placeholder="内容" />
+        </div>
+
+        <div class="form-group">
+            <InputTextArea @bind-Value="_note.Code" rows="10" class="form-control" placeholder="代码" />
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-outline-primary" value="修改" />
+        </div>
+    </EditForm>
+}
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    private Note _note;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _note = await _noteService.GetAsync(this.Id);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && _note == null)
+        {
+            await _jsRuntime.AlertAsync("随笔加载失败");
+
+            _navigationManager.NavigateTo("/");
+        }
+    }
+
+    private async Task Submit()
+    {
+        if (await _jsRuntime.CheckPassword())
+        {
+            _note.EditTime = DateTime.Now;
+
+            _note.HtmlText = _toHtmlService.Transform(_note.Content);
+
+            await _noteService.UpdateAsync(_note);
+
+            _navigationManager.NavigateTo("/");
+        }
+    }
+}
